@@ -1,12 +1,20 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class GUI extends JFrame {
 
     public GUI() {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
-        this.setVisible(true);
+        this.setTitle("2D Game");
+
+        GamePanel gamePanel = new GamePanel();
+
+        this.add(gamePanel);
         this.setLocationRelativeTo(null);
+        this.setVisible(true);
+
+        this.pack();
     }
 
 }
