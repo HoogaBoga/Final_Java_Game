@@ -11,10 +11,15 @@ public class GUI extends JFrame {
         GamePanel gamePanel = new GamePanel();
 
         this.add(gamePanel);
+
+        this.pack();
+        
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
-        this.pack();
+        gamePanel.startGameThread();
+
+
     }
 
 }
