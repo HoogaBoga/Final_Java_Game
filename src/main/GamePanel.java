@@ -1,6 +1,8 @@
 package main;
 
+import Entities.CollisionCheck;
 import Entities.Player;
+import Tile.TileManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,17 +11,25 @@ public class GamePanel extends JPanel implements Runnable {
 
     //Screen Settings
     final int originTileSize = 16; // 16x16 tiles
-    final int scale = 2;
+    final int scale = 3;
 
     public final int newTileSize = originTileSize * scale; // 48x48 tiles
-    final int maxScreenCol = 20;
-    final int maxScreenRow = 15;
-    final int screenWidth = newTileSize * maxScreenCol; // 960 pixels
-    final int screenHeight = newTileSize * maxScreenRow; // 720 pixels
+    public final int maxScreenCol = 20;
+    public final int maxScreenRow = 15;
+    public final int screenWidth = newTileSize * maxScreenCol; // 960 pixels
+    public final int screenHeight = newTileSize * maxScreenRow;// 720 pixels
+
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 50;
+    public final int worldWidth = newTileSize * maxWorldCol;
+    public final int worldHeight = newTileSize*maxWorldRow;
+
 
     KeyInputs keyPut = new KeyInputs();
     Thread gameThread;
-    Player player = new Player(this, keyPut);
+    public CollisionCheck collisionCheck = new CollisionCheck(this);
+    public Player player = new Player(this, keyPut);
+    public TileManager tileManager = new TileManager(this);
 
     //Frames Per Second Restriction
     int fps = 60;
@@ -27,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
     public GamePanel(){
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-        this.setBackground(Color.GRAY);
+        this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyPut);
         this.setFocusable(true);
@@ -85,8 +95,9 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D) g;
 
-        player.draw(g2);
+        tileManager.draw(g2);
 
+        player.draw(g2);
 
         g2.dispose();
     }

@@ -15,10 +15,18 @@ public class Player extends Entity{
     GamePanel gamePanel;
     KeyInputs keyPut;
 
+    public final int screenX;
+    public final int screenY;
+
     public Player(GamePanel gamePanel, KeyInputs keyPut){
 
         this.gamePanel = gamePanel;
         this.keyPut = keyPut;
+
+        screenX = gamePanel.screenWidth/2 - (gamePanel.newTileSize/2);
+        screenY = gamePanel.screenHeight/2 - (gamePanel.newTileSize/2);
+
+        solid = new Rectangle(8, 16, 32, 32);
 
         setDefaultValues();
         getPlayerImage();
@@ -26,8 +34,8 @@ public class Player extends Entity{
     
     public void setDefaultValues(){
     
-        x = 100;
-        y = 100;
+        worldX = 0;
+        worldY = gamePanel.newTileSize * 2;
         speed = 4;
         direction = "down";
     }
@@ -60,22 +68,38 @@ public class Player extends Entity{
 
             if(keyPut.upPress){
                 direction = "up";
-                y -= speed;
             }
 
             else if(keyPut.downPress){
                 direction = "down";
-                y += speed;
             }
 
             else if(keyPut.rightPress){
                 direction = "right";
-                x += speed;
             }
 
             else if(keyPut.leftPress){
                 direction = "left";
-                x -= speed;
+            }
+
+            collisionOn = false;
+            gamePanel.collisionCheck.tileCheck(this);
+
+            if(!collisionOn){
+                switch (direction){
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
+                }
             }
 
             spriteCounter++;
@@ -159,6 +183,6 @@ public class Player extends Entity{
                 break;
         }
 
-    g2.drawImage(image, x, y, gamePanel.newTileSize, gamePanel.newTileSize, null);
+    g2.drawImage(image, screenX, screenY, gamePanel.newTileSize, gamePanel.newTileSize, null);
     }
 }
