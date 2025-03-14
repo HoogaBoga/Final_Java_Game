@@ -2,6 +2,7 @@ package main;
 
 import Entities.CollisionCheck;
 import Entities.Player;
+import Objects.TopObject;
 import Tile.TileManager;
 
 import javax.swing.*;
@@ -13,7 +14,9 @@ public class GamePanel extends JPanel implements Runnable {
     final int originTileSize = 16; // 16x16 tiles
     final int scale = 3;
 
-    public final int newTileSize = originTileSize * scale; // 48x48 tiles
+
+    public final int newTileSize = originTileSize * scale;// 48x48 tiles
+
     public final int maxScreenCol = 20;
     public final int maxScreenRow = 15;
     public final int screenWidth = newTileSize * maxScreenCol; // 960 pixels
@@ -21,15 +24,21 @@ public class GamePanel extends JPanel implements Runnable {
 
     public final int maxWorldCol = 50;
     public final int maxWorldRow = 50;
-    public final int worldWidth = newTileSize * maxWorldCol;
-    public final int worldHeight = newTileSize*maxWorldRow;
 
 
+
+    Sound sound = new Sound();
+    Sound soundFX = new Sound();
     KeyInputs keyPut = new KeyInputs();
     Thread gameThread;
+    public UI ui = new UI(this);
     public CollisionCheck collisionCheck = new CollisionCheck(this);
     public Player player = new Player(this, keyPut);
     public TileManager tileManager = new TileManager(this);
+    public TopObject[] object = new TopObject[10];
+
+    public SetAssets setAssets = new SetAssets(this);
+
 
     //Frames Per Second Restriction
     int fps = 60;
@@ -41,6 +50,13 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyPut);
         this.setFocusable(true);
+    }
+
+    public void gameSetup() {
+
+        setAssets.setObjects();
+
+        playMusic(0);
     }
 
     public void startGameThread(){
@@ -97,8 +113,34 @@ public class GamePanel extends JPanel implements Runnable {
 
         tileManager.draw(g2);
 
+        for (TopObject topObject : object) {
+            if (topObject != null) {
+                topObject.draw(g2, this);
+            }
+        }
+
+
+        ui.draw(g2);
         player.draw(g2);
 
         g2.dispose();
+    }
+
+    public void playMusic(int i){
+
+
+        sound.setFile(i);
+        sound.playMusic();
+        sound.loopMusic();
+
+    }
+
+    public void stopMusic(){
+        sound.stopMusic();
+    }
+
+    public void playSoundFX(int i){
+        soundFX.setFile(i);
+        soundFX.playMusicSFX(i, () -> this.playMusic(0));
     }
 }

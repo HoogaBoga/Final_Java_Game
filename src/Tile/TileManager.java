@@ -20,148 +20,162 @@ public class TileManager{
 
         this.gp = gp;
 
-        tile = new Tiles[35];
+        tile = new Tiles[40];
         mapTileNumber = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
-        loadMap("/resources/Map.txt/");
+        loadMap("/resources/Map2.txt/");
     }
 
     public void getTileImage(){
 
         try {
 
+            tile[0] = new Tiles();
+            tile[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/FarmLand_Tile.png")));
+            //farm land tiles
+
             tile[1] = new Tiles();
-            tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/001.png")));
+            tile[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Grass_Middle.png")));
             tile[1].collision = true;
-            //grass tiles
+            //grass
 
             tile[2] = new Tiles();
-            tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/002.png")));
+            tile[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/House.png")));
             tile[2].collision = true;
-            //grass with black tiles
+            //house tiles
 
             tile[3] = new Tiles();
-            tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/003.png")));
-            //path tiles
+            tile[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Path_Middle.png")));
+            //path
 
             tile[4] = new Tiles();
-            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/004.png")));
-            //path with upper left grass
+            tile[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Path_Tile_BotLeft.png")));
+            tile[4].collision = true;
+            //path with lower left grass
 
             tile[5] = new Tiles();
-            tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/005.png")));
-            //path with upper middle grass
+            tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Path_Tile_BotMid.png"))); //
+            //path with lower mid-grass
 
             tile[6] = new Tiles();
-            tile[6].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/006.png"))); //
-            //path with upper right grass
-
-            tile[7] = new Tiles();
-            tile[7].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/007.png")));
-            //path with middle left grass
-
-            tile[8] = new Tiles();
-            tile[8].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/008.png")));
-            //path with middle right grass
+            tile[6].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Path_Tile_BotRight.png")));
+            tile[6].collision = true;
+            //path with lower right grass
 
             tile[9] = new Tiles();
-            tile[9].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/009.png")));
-            //path with bottom left grass
+            tile[9].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Path_Tile_MidLeft.png")));
+            tile[9].collision = true;
+            //path with middle left grass
 
             tile[10] = new Tiles();
-            tile[10].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/010.png")));
-            //path with bottom middle grass
+            tile[10].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Path_Tile_MidRight.png")));
+            //path with mid-right grass
 
             tile[11] = new Tiles();
-            tile[11].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/011.png")));
-            //path with bottom right grass
+            tile[11].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Path_Tile_Step1.png")));
+            //path with dark
 
             tile[16] = new Tiles();
-            tile[16].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/016.png")));
-            tile[16].collision = true;
-            //tree tiles
+            tile[16].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Path_Tile_UpperLeft.png")));
+            //path with upper left grass
+
+            tile[17] = new Tiles();
+            tile[17].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Path_Tile_UpperMid.png")));
+            //path with upper middle grass
 
             tile[18] = new Tiles();
-            tile[18].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/018.png")));
-            tile[18].collision = true;
-            //plain water tile
+            tile[18].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Path_Tile_UpperRight.png")));
+
+            //path with upper right grass
 
             tile[19] = new Tiles();
-            tile[19].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/019.png")));
+            tile[19].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Tree.png")));
             tile[19].collision = true;
-            //water tile with waves
+            //Tree tile
 
             tile[20] = new Tiles();
-            tile[20].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/020.png")));
+            tile[20].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Wall.png")));
             tile[20].collision = true;
-            //top left water with grass
+            //Wall tile
 
             tile[21] = new Tiles();
-            tile[21].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/021.png")));
+            tile[21].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Water_Middle.png")));
             tile[21].collision = true;
-            //top middle water with grass
+            //Water tile
 
             tile[22] = new Tiles();
-            tile[22].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/022.png")));
+            tile[22].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Water_Tile_BotLeft.png")));
             tile[22].collision = true;
-            //top right water with grass
+            //Water bottom left
 
             tile[23] = new Tiles();
-            tile[23].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/023.png")));
+            tile[23].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Water_Tile_BotMid.png")));
             tile[23].collision = true;
-            //middle left water with grass
+            //Water bottom mid
 
             tile[24] = new Tiles();
-            tile[24].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/024.png")));
+            tile[24].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Water_Tile_BotRight.png")));
             tile[24].collision = true;
-            //middle right water with grass
+            //Water bottom right
 
             tile[25] = new Tiles();
-            tile[25].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/025.png")));
+            tile[25].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Water_Tile_BottomLeft.png")));
             tile[25].collision = true;
-            //bottom left water with grass
+            //Water with grass bot left
 
             tile[26] = new Tiles();
-            tile[26].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/026.png")));
+            tile[26].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Water_Tile_BottomRight.png")));
             tile[26].collision = true;
-
-            //bottom middle water with grass
+            //Water with grass bot right
 
             tile[27] = new Tiles();
-            tile[27].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/027.png")));
+            tile[27].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Water_Tile_MidLeft.png")));
             tile[27].collision = true;
-            //bottom right water with grass
+            //Water mid left
 
             tile[28] = new Tiles();
-            tile[28].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/028.png")));
+            tile[28].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Water_Tile_MidRight.png")));
             tile[28].collision = true;
-            //top left water with grass in middle
+            //Water mid right
 
             tile[29] = new Tiles();
-            tile[29].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/029.png")));
+            tile[29].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Water_Tile_Step1.png")));
             tile[29].collision = true;
-            //top right water with grass in middle
+            //Water with black 1
 
             tile[30] = new Tiles();
-            tile[30].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/030.png")));
+            tile[30].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Water_Tile_Step2.png")));
             tile[30].collision = true;
-            //bottom left water with grass in middle
+            //Water with black 2
 
             tile[31] = new Tiles();
-            tile[31].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/031.png")));
+            tile[31].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Water_Tile_Step3.png")));
             tile[31].collision = true;
-            //bottom right water with grass in middle
+            //Water with black 3
 
             tile[32] = new Tiles();
-            tile[32].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/032.png")));
+            tile[32].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Water_Tile_TopLeft.png")));
             tile[32].collision = true;
-            //rock tiles
+            //water top left grass
 
             tile[33] = new Tiles();
-            tile[33].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles/033.png")));
+            tile[33].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Water_Tile_TopRight.png")));
             tile[33].collision = true;
+            //water top right grass
+
+            tile[34] = new Tiles();
+            tile[34].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Water_Tile_UpperLeft.png")));
+            tile[34].collision = true;
             //house tiles
+
+            tile[35] = new Tiles();
+            tile[35].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Water_Tile_UpperMid.png")));
+            tile[35].collision = true;
+
+            tile[36] = new Tiles();
+            tile[36].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Tiles2/Water_Tile_UpperRight.png")));
+            tile[36].collision = true;
 
         } catch (IOException ioe){
             ioe.printStackTrace();

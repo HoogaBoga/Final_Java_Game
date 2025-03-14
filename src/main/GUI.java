@@ -18,6 +18,8 @@ public class GUI extends JFrame {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
+        gamePanel.gameSetup();
+
         gamePanel.startGameThread();
 
 

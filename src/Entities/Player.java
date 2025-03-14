@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.sql.Time;
 import java.util.Objects;
 
 public class Player extends Entity{
@@ -18,6 +19,9 @@ public class Player extends Entity{
     public final int screenX;
     public final int screenY;
 
+    public int hasPotions = 0;
+    int hasSword = 0;
+
     public Player(GamePanel gamePanel, KeyInputs keyPut){
 
         this.gamePanel = gamePanel;
@@ -26,7 +30,10 @@ public class Player extends Entity{
         screenX = gamePanel.screenWidth/2 - (gamePanel.newTileSize/2);
         screenY = gamePanel.screenHeight/2 - (gamePanel.newTileSize/2);
 
-        solid = new Rectangle(8, 16, 32, 32);
+        solid = new Rectangle(8, 16, 24, 24);
+
+        solidDefaultX = solid.x;
+        solidDefaultY = solid.y;
 
         setDefaultValues();
         getPlayerImage();
@@ -85,6 +92,9 @@ public class Player extends Entity{
             collisionOn = false;
             gamePanel.collisionCheck.tileCheck(this);
 
+            int objectIndex = gamePanel.collisionCheck.objectCheck(this, true);
+            pickUpObject(objectIndex);
+
             if(!collisionOn){
                 switch (direction){
                     case "up":
@@ -119,6 +129,30 @@ public class Player extends Entity{
             }
         }
 
+    }
+
+    public void pickUpObject(int index){
+
+        if(index != 999){
+
+            String objectName = gamePanel.object[index].name;
+
+            switch (objectName){
+                case "Potion":
+                    gamePanel.stopMusic();
+                    gamePanel.playSoundFX(2);
+                    gamePanel.ui.showMessage("You got a potion!");
+                    hasPotions++;
+                    gamePanel.object[index] = null;
+                    break;
+                case "Sword":
+                    gamePanel.stopMusic();
+                    gamePanel.playSoundFX(1);
+                    hasSword++;
+                    gamePanel.object[index] = null;
+                    break;
+            }
+        }
     }
     
     public void draw(Graphics2D g2){
