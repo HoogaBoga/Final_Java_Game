@@ -1,9 +1,11 @@
 package Entities;
 
 import main.GamePanel;
+import main.ItemDescriptionGUI;
 import main.KeyInputs;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -21,6 +23,7 @@ public class Player extends Entity{
 
     public int hasPotions = 0;
     int hasSword = 0;
+
 
     public Player(GamePanel gamePanel, KeyInputs keyPut){
 
@@ -137,6 +140,12 @@ public class Player extends Entity{
 
             String objectName = gamePanel.object[index].name;
 
+            if(!gamePanel.pickedUpItems.contains(objectName)){
+                gamePanel.pickedUpItems.add(objectName);
+
+                new ItemDescriptionGUI(getItemDescription(objectName), objectName, gamePanel.object[index].image);
+            }
+
             switch (objectName){
                 case "Potion":
                     gamePanel.stopMusic();
@@ -145,14 +154,28 @@ public class Player extends Entity{
                     hasPotions++;
                     gamePanel.object[index] = null;
                     break;
-                case "Sword":
+                case "Holy Sword of Stefen":
                     gamePanel.stopMusic();
                     gamePanel.playSoundFX(1);
+                    gamePanel.ui.showMessage("You got the Holy Sword of Stefen!");
                     hasSword++;
                     gamePanel.object[index] = null;
                     break;
             }
         }
+    }
+
+    public String getItemDescription(String objectName){
+        return switch (objectName) {
+            case "Potion" ->
+                    "Taken from the blood of a monarch witch, it contains the magic that brings life back to those who dare drinks of it." +
+                            " A healing potion that heals 100% of the player's HP.";
+
+            case "Holy Sword of Stefen" -> "Taken from the lifeless corpse of the God of War, Stefen. " +
+                    "The Holy Sword is a powerful weapon that can slice through anything, be it an enemy or an object standing in your way to victory!";
+
+            default -> "A mysterious Item";
+        };
     }
     
     public void draw(Graphics2D g2){
