@@ -20,6 +20,8 @@ public class ItemDescriptionGUI extends JFrame{
         setLocationRelativeTo(null);
         setLayout(null);
 
+        ImageIcon imageIcon = new ImageIcon(image);
+
         JPanel mainPanel = new JPanel();
 
         mainPanel.setSize(new Dimension(606, 462));
@@ -40,12 +42,23 @@ public class ItemDescriptionGUI extends JFrame{
         JTextPane descriptionLabel = new JTextPane();
         descriptionLabel.setText(description);
         descriptionLabel.setFont(FontLoader.loadFontFromResource("/resources/fonts/Jacquard12-Regular.ttf", 24f));
-        descriptionLabel.setBounds(197, 108, 386, 276);
+        descriptionLabel.setBounds(160, 45, 355, 200);
         descriptionLabel.setBackground(new Color(104, 50, 19));
         descriptionLabel.setForeground(Color.WHITE);
         descriptionLabel.setEditable(false);
         descriptionLabel.setFocusable(false);
-        descriptionLabel.setBorder(BorderFactory.createLineBorder(new Color(182, 159, 11), 5)); // Gold border
+
+        JLabel imagePanel = new JLabel(imageIcon);
+        imagePanel.setBounds(65, 95, 60, 56);
+        imagePanel.setBorder(BorderFactory.createLineBorder(new Color(255, 253, 243), 5)); // White Border
+
+
+        JPanel descriptionPanel = new JPanel(null);
+        descriptionPanel.setBorder(BorderFactory.createLineBorder(new Color(182, 159, 11), 5)); // Gold border
+        descriptionPanel.setBounds(36, 111, 531, 276);
+        descriptionPanel.setBackground(new Color(104, 50, 19));
+        descriptionPanel.add(descriptionLabel);
+        descriptionPanel.add(imagePanel);
 
         StyledDocument doc = descriptionLabel.getStyledDocument();
         SimpleAttributeSet style = new SimpleAttributeSet();
@@ -72,7 +85,7 @@ public class ItemDescriptionGUI extends JFrame{
         });
 
         this.add(titlePanel);
-        this.add(descriptionLabel);
+        this.add(descriptionPanel);
         this.add(okButton);
         this.add(mainPanel);
 

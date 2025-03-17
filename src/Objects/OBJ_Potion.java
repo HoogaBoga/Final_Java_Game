@@ -7,7 +7,7 @@ import java.util.Objects;
 public class OBJ_Potion extends TopObject{
 
     public OBJ_Potion(){
-        name = "Potion";
+        name = "Monarch Witch's Blood";
 
         try {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/Objects/RedPotion.png")));
