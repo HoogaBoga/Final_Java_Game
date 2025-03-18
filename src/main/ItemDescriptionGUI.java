@@ -20,7 +20,8 @@ public class ItemDescriptionGUI extends JFrame{
         setLocationRelativeTo(null);
         setLayout(null);
 
-        ImageIcon imageIcon = new ImageIcon(image);
+        Image scaledImage = image.getScaledInstance(64, 64, Image.SCALE_SMOOTH);
+        ImageIcon imageIcon = new ImageIcon(scaledImage);
 
         JPanel mainPanel = new JPanel();
 
@@ -49,7 +50,7 @@ public class ItemDescriptionGUI extends JFrame{
         descriptionLabel.setFocusable(false);
 
         JLabel imagePanel = new JLabel(imageIcon);
-        imagePanel.setBounds(65, 95, 60, 56);
+        imagePanel.setBounds(55, 95, 80, 76);
         imagePanel.setBorder(BorderFactory.createLineBorder(new Color(255, 253, 243), 5)); // White Border
 
 

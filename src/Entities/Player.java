@@ -147,7 +147,7 @@ public class Player extends Entity{
             }
 
             switch (objectName){
-                case "Monarch Witch's Blood":
+                case "Blood of the Monarch Xavier":
                     gamePanel.stopMusic();
                     gamePanel.playSoundFX(2);
                     gamePanel.ui.showMessage("You got a potion!");
@@ -167,8 +167,8 @@ public class Player extends Entity{
 
     public String getItemDescription(String objectName){
         return switch (objectName) {
-            case "Monarch Witch's Blood" ->
-                    "Taken from the blood of a monarch witch, it contains the magic that brings life back to those who dare drinks of it." +
+            case "Blood of the Monarch Xavier" ->
+                    "Taken from the blood of the hand from the fallen knight, Monarch Xavier, it contains the magic that brings life back to those who dare drinks of it." +
                             " A healing potion that heals 100% of the player's HP.";
 
             case "Holy Sword of Stefen" -> "Taken from the lifeless corpse of the God of War, Stefen. " +
