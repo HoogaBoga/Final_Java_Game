@@ -1,6 +1,7 @@
 package Objects;
 
 import main.GamePanel;
+import main.UtilityTool;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -15,6 +16,7 @@ public class TopObject {
     public Rectangle solid = new Rectangle(0,0, 48, 48);
     public int solidDefaultX = 0;
     public int solidDefaultY = 0;
+    UtilityTool utilityTool = new UtilityTool();
     
     public void draw(Graphics2D g2, GamePanel gamePanel){
 

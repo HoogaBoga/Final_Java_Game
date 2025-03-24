@@ -4,14 +4,8 @@ import main.GamePanel;
 import main.ItemDescriptionGUI;
 import main.KeyInputs;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.sql.Time;
-import java.util.Objects;
 
 public class Player extends Entity{
 
@@ -26,6 +20,8 @@ public class Player extends Entity{
 
 
     public Player(GamePanel gamePanel, KeyInputs keyPut){
+
+        super(gamePanel);
 
         this.gamePanel = gamePanel;
         this.keyPut = keyPut;
@@ -52,29 +48,25 @@ public class Player extends Entity{
 
     public void getPlayerImage(){
 
-        try{
+        up1 = setup("/resources/faceUp");
+        up2 = setup("/resources/walkUpLeft");
+        up3 = setup("/resources/walkUpRight");
+        down1 = setup("/resources/faceFront");
+        down2 = setup("/resources/walkFrontLeft");
+        down3 = setup("/resources/walkFrontRight");
+        right1 = setup("/resources/faceRight");
+        right2 = setup("/resources/walkRightLeft");
+        right3 = setup("/resources/walkRightRight");
+        left1 = setup("/resources/faceLeft");
+        left2 = setup("/resources/walkLeftLeft");
+        left3 = setup("/resources/walkLeftRight");
 
-            up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/faceUp.png")));
-            up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/walkUpLeft.png")));
-            up3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/walkUpRight.png")));
-            down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/faceFront.png")));
-            down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/walkFrontLeft.png")));
-            down3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/walkFrontRight.png")));
-            right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/faceRight.png")));
-            right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/walkRightLeft.png")));
-            right3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/walkRightRight.png")));
-            left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/faceLeft.png")));
-            left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/walkLeftLeft.png")));
-            left3 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/resources/walkLeftRight.png")));
-
-        } catch (IOException ie){
-            ie.printStackTrace();
-        }
     }
-    
+
+
     public void update(){
 
-        if(keyPut.upPress || keyPut.downPress || keyPut.leftPress || keyPut.rightPress){
+        if(keyPut.upPress || keyPut.downPress || keyPut.leftPress || keyPut.rightPress || keyPut.enterPressed){
 
             if(keyPut.upPress){
                 direction = "up";
@@ -98,21 +90,30 @@ public class Player extends Entity{
             int objectIndex = gamePanel.collisionCheck.objectCheck(this, true);
             pickUpObject(objectIndex);
 
+            int npcIndex = gamePanel.collisionCheck.entityCheck(this, gamePanel.npc);
+            interactNPC(npcIndex);
+
             if(!collisionOn){
-                switch (direction){
-                    case "up":
-                        worldY -= speed;
-                        break;
-                    case "down":
-                        worldY += speed;
-                        break;
-                    case "left":
-                        worldX -= speed;
-                        break;
-                    case "right":
-                        worldX += speed;
-                        break;
+                if(!keyPut.enterPressed) {
+                    switch (direction) {
+                        case "up":
+                            worldY -= speed;
+                            break;
+                        case "down":
+                            worldY += speed;
+                            break;
+                        case "left":
+                            worldX -= speed;
+                            break;
+                        case "right":
+                            worldX += speed;
+                            break;
+                    }
                 }
+            }
+
+            if (gamePanel.gameState == gamePanel.dialogueState) {
+                gamePanel.keyPut.enterPressed = false;
             }
 
             spriteCounter++;
@@ -163,6 +164,17 @@ public class Player extends Entity{
                     break;
             }
         }
+    }
+
+    public void interactNPC(int index){
+        if(index != 999){
+            if(gamePanel.keyPut.enterPressed){
+                gamePanel.gameState = gamePanel.dialogueState;
+                gamePanel.npc[index].speak();
+            }
+        }
+
+        gamePanel.keyPut.enterPressed = false;
     }
 
     public String getItemDescription(String objectName){
@@ -240,6 +252,6 @@ public class Player extends Entity{
                 break;
         }
 
-    g2.drawImage(image, screenX, screenY, gamePanel.newTileSize, gamePanel.newTileSize, null);
+    g2.drawImage(image, screenX, screenY, null);
     }
 }
