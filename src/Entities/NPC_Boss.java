@@ -1,11 +1,15 @@
 package Entities;
 
+import main.JumpScare;
 import main.GamePanel;
 
 import java.util.Random;
 
 
 public class NPC_Boss extends Entity{
+
+    public boolean dialogueFinished = false;
+
     public NPC_Boss(GamePanel gp) {
         super(gp);
 
@@ -34,7 +38,8 @@ public class NPC_Boss extends Entity{
     public void setDialogue(){
         dialogues[0] = "Welcome young traveller...";
         dialogues[1] = "I am the Wicked Witch of the East! Princess!!!";
-        dialogues[2] = "You have done well surviving this far to face me... but this time you will meet \nyour doom!!!";
+        dialogues[2] = "You have done well surviving this far to face me... however, we won't be able to \nfight yet." +
+                "There is no battle system set, so instead I will scare you now!";
     }
 
     @Override
@@ -70,7 +75,19 @@ public class NPC_Boss extends Entity{
 
     @Override
     public void speak() {
-        super.speak();
+        if (!dialogueFinished) {
+            super.speak(); // Show the next dialogue
+            if (dialogueIndex > 2) {
+                dialogueFinished = true; // Set the flag when dialogues are finished
+            }
+        } else {
+            // Open the frame when Enter is pressed again
+            if (gp.keyPut.enterPressed) {
+                new JumpScare(); // Open the frame
+                gp.playSoundFX(3);
+                dialogueFinished = false; // Reset flag if needed
+            }
+        }
     }
 
 }

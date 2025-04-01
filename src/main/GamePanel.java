@@ -44,6 +44,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int playState = 1;
     public final int pauseState = 2;
     public final int dialogueState = 3;
+    public final int battleState = 4;
 
     public SetAssets setAssets = new SetAssets(this);
 
@@ -115,17 +116,12 @@ public class GamePanel extends JPanel implements Runnable {
 
         if(gameState == playState){
             player.update();
-
-//            for(int i = 0; i < npc.length; i++){
-//                if(npc[i] != null){
-//                    npc[i].update();
-//                }
-//            }
         }
 
         if(gameState == pauseState){
             //wa
         }
+
     }
 
     public void paintComponent(Graphics g){

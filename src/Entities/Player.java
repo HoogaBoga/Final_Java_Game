@@ -1,5 +1,6 @@
 package Entities;
 
+import Battle.BattleSystemWindow;
 import main.GamePanel;
 import main.ItemDescriptionGUI;
 import main.KeyInputs;
@@ -172,9 +173,9 @@ public class Player extends Entity{
                 gamePanel.gameState = gamePanel.dialogueState;
                 gamePanel.npc[index].speak();
             }
+            gamePanel.keyPut.enterPressed = false;
         }
 
-        gamePanel.keyPut.enterPressed = false;
     }
 
     public String getItemDescription(String objectName){

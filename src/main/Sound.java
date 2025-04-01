@@ -9,10 +9,10 @@ public class Sound {
     URL[] soundURL = new URL[30];
 
     public Sound(){
-
         soundURL[0] = getClass().getResource("/resources/Sounds/1-05. Vaniville Town.wav");
         soundURL[1] = getClass().getResource("/resources/Sounds/item-found.wav");
         soundURL[2] = getClass().getResource("/resources/Sounds/potionPickup.wav");
+        soundURL[3] = getClass().getResource("/resources/Sounds/fuzzy-jumpscare-80560.wav");
     }
 
     public void setFile(int i){

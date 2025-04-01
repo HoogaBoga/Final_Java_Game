@@ -65,6 +65,10 @@ public class UI {
         if(gamePanel.gameState == gamePanel.dialogueState){
             drawDialogueScreen();
         }
+
+        if(gamePanel.gameState == gamePanel.battleState){
+
+        }
     }
 
     public void drawPause(){
