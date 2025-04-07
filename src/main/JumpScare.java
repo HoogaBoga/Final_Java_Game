@@ -36,7 +36,7 @@ public class JumpScare extends JFrame {
         endGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SwingUtilities.getWindowAncestor(endGameButton).dispose();
+                System.exit(0);
             }
         });
 
