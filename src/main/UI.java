@@ -38,6 +38,7 @@ public class UI {
         g2.setColor(Color.white);
         g2.drawImage(potionImage, gamePanel.newTileSize/2, gamePanel.newTileSize/2, gamePanel.newTileSize, gamePanel.newTileSize, null);
         g2.drawString("x " + gamePanel.player.hasPotions, 65, 65);
+        g2.drawString("Press I for Instructions" ,35, 110);
 
         if(messageOn){
             g2.setFont(g2.getFont().deriveFont(20f));
