@@ -12,6 +12,7 @@ public class KeyInputs implements KeyListener {
 
     //DEBUG
     public boolean checkDrawTime = false;
+    private boolean instructionsOpen = false;
 
     public KeyInputs(GamePanel gp){
         this.gp = gp;
@@ -59,6 +60,11 @@ public class KeyInputs implements KeyListener {
                     checkDrawTime = false;
                 }
             }
+
+            if (pressedCode == KeyEvent.VK_I && !instructionsOpen) {
+                new InstructionsGUI();
+                instructionsOpen = true;
+            }
         }
 
         //PAUSE STATE
@@ -96,6 +102,10 @@ public class KeyInputs implements KeyListener {
 
         if(releasedCode == KeyEvent.VK_D){
             rightPress = false;
+        }
+
+        if (releasedCode == KeyEvent.VK_I) {
+            instructionsOpen = false;
         }
     }
 }

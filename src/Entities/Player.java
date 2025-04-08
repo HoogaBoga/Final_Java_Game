@@ -65,69 +65,65 @@ public class Player extends Entity{
     }
 
 
-    public void update(){
+    public void update() {
 
-        if(keyPut.upPress || keyPut.downPress || keyPut.leftPress || keyPut.rightPress || keyPut.enterPressed){
+        boolean isMoving = keyPut.upPress || keyPut.downPress || keyPut.leftPress || keyPut.rightPress;
 
-            if(keyPut.upPress){
-                direction = "up";
-            }
+        if (isMoving || keyPut.enterPressed) {
 
-            else if(keyPut.downPress){
-                direction = "down";
-            }
-
-            else if(keyPut.rightPress){
-                direction = "right";
-            }
-
-            else if(keyPut.leftPress){
-                direction = "left";
+            if (isMoving) {
+                if (keyPut.upPress) {
+                    direction = "up";
+                } else if (keyPut.downPress) {
+                    direction = "down";
+                } else if (keyPut.rightPress) {
+                    direction = "right";
+                } else if (keyPut.leftPress) {
+                    direction = "left";
+                }
             }
 
             collisionOn = false;
-            gamePanel.collisionCheck.tileCheck(this);
+            if (isMoving) {
+                gamePanel.collisionCheck.tileCheck(this);
+            }
 
             int objectIndex = gamePanel.collisionCheck.objectCheck(this, true);
             pickUpObject(objectIndex);
 
             int npcIndex = gamePanel.collisionCheck.entityCheck(this, gamePanel.npc);
-            interactNPC(npcIndex);
 
-            if(!collisionOn){
-                if(!keyPut.enterPressed) {
-                    switch (direction) {
-                        case "up":
-                            worldY -= speed;
-                            break;
-                        case "down":
-                            worldY += speed;
-                            break;
-                        case "left":
-                            worldX -= speed;
-                            break;
-                        case "right":
-                            worldX += speed;
-                            break;
-                    }
+            // Move only if a directional key is pressed AND movement is allowed
+            if (isMoving && !collisionOn) {
+                switch (direction) {
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "left":
+                        worldX -= speed;
+                        break;
+                    case "right":
+                        worldX += speed;
+                        break;
                 }
             }
+
+            interactNPC(npcIndex);
 
             if (gamePanel.gameState == gamePanel.dialogueState) {
                 gamePanel.keyPut.enterPressed = false;
             }
 
             spriteCounter++;
-            if(spriteCounter > 10){
-                if(spriteNum == 1){
+            if (spriteCounter > 10) {
+                if (spriteNum == 1) {
                     spriteNum = 2;
-                }
-
-                else if(spriteNum == 2){
+                } else if (spriteNum == 2) {
                     spriteNum = 3;
-                }
-
-                else if(spriteNum == 3){
+                } else if (spriteNum == 3) {
                     spriteNum = 1;
                 }
                 spriteCounter = 0;
@@ -135,7 +131,6 @@ public class Player extends Entity{
         }
 
     }
-
     public void pickUpObject(int index){
 
         if(index != 999){
